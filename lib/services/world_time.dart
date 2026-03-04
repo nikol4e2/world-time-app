@@ -14,13 +14,21 @@ class WorldTime {
 
   Future<void> getTime() async{
 
-    Response response= await get(Uri.parse("https://timeapi.io/api/v1/time/current/utc"));
-    Map data = jsonDecode(response.body);
-    DateTime dateTime = DateTime.parse( data['utc_time']);
-    dateTime=dateTime.add(Duration(hours: 1));
-    String formattedTime =
-        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-    time = formattedTime;
+    try{
+      Response response= await get(Uri.parse("https://timeapi.io/api/v1/time/current/utc"));
+      Map data = jsonDecode(response.body);
+      DateTime dateTime = DateTime.parse( data['utc_time']);
+      dateTime=dateTime.add(Duration(hours: 1));
+      String formattedTime =
+          "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+      time = formattedTime;
+    }
+    catch(e)
+    {
+      time="Error";
+    }
+
+
   }
 
 
